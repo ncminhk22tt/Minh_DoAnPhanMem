@@ -47,11 +47,13 @@ app.use("/api/bookings", bookingRoutes)
 app.use("/api/cities", cityRoutes)
 app.use("/api/seats", seatBookingRoutes)
 
-app.get("/test-db", (req, res) => {
-  db.query("SHOW TABLES", (err, result) => {
-    if (err) return res.json(err);
+app.get("/test-db", async (req, res) => {
+  try {
+    const [result] = await db.query("SHOW TABLES");
     res.json(result);
-  });
+  } catch (err) {
+    res.json(err);
+  }
 });
 
 module.exports = app
