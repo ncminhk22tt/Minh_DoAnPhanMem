@@ -50,12 +50,13 @@ app.use("/api/seats", seatBookingRoutes)
 
 app.get("/test-db", async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT 1")
+    const [rows] = await db.query("SELECT 1 as ok")
     res.json({ ok: true, rows })
   } catch (err) {
     res.json({
       ok: false,
-      error: err.message
+      error: err.message,
+      code: err.code
     })
   }
 })
