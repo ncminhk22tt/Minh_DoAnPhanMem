@@ -70,4 +70,16 @@ app.get("/health-db", async (req, res) => {
   }
 });
 
+app.get("/test-db", async (req, res) => {
+  try {
+    const [rows] = await db.query("SHOW TABLES");
+    res.json(rows);
+  } catch (err) {
+    res.json({
+      status: "DB ERROR",
+      error: err.message
+    });
+  }
+});
+
 module.exports = app
