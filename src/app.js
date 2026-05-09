@@ -72,14 +72,14 @@ app.get("/health-db", async (req, res) => {
 
 app.get("/test-db", async (req, res) => {
   try {
-    const [rows] = await db.query("SHOW TABLES");
-    res.json(rows);
+    const [rows] = await db.query("SELECT 1")
+    res.json({ ok: true, rows })
   } catch (err) {
     res.json({
-      status: "DB ERROR",
+      ok: false,
       error: err.message
-    });
+    })
   }
-});
+})
 
 module.exports = app
