@@ -59,14 +59,13 @@ app.get("/test-db", async (req, res) => {
 app.get("/health-db", async (req, res) => {
   try {
     const [rows] = await db.query("SELECT 1 AS ok");
-    res.json({
-      status: "DB OK",
-      data: rows
-    });
+    res.json({ status: "DB OK", data: rows });
   } catch (err) {
+    console.log("DB ERROR FULL:", err); // 👈 QUAN TRỌNG
     res.json({
       status: "DB ERROR",
-      error: err.message
+      error: err.message,
+      code: err.code
     });
   }
 });
