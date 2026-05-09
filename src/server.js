@@ -1,9 +1,9 @@
 require("dotenv").config()
 const app = require("./app")
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server đang chạy trên port: ${PORT}`);
-});
-
+app.listen(PORT, () => {
+  // Thêm http://localhost: trước PORT để terminal tạo link
+  console.log(`Server đang chạy: http://localhost:${PORT}`)
+})
