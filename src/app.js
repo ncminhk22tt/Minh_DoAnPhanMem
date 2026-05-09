@@ -3,6 +3,8 @@ const path = require("path")
 require("dotenv").config()
 const cors = require("cors")
 
+const db = require("./config/db")
+
 const app = express()
 
 const adminAuthRoutes = require("./routes/admin/adminAuthRoutes")
