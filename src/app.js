@@ -45,4 +45,11 @@ app.use("/api/bookings", bookingRoutes)
 app.use("/api/cities", cityRoutes)
 app.use("/api/seats", seatBookingRoutes)
 
+app.get("/test-db", (req, res) => {
+  db.query("SHOW TABLES", (err, result) => {
+    if (err) return res.json(err);
+    res.json(result);
+  });
+});
+
 module.exports = app
