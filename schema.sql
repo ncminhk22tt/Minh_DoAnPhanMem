@@ -242,32 +242,5 @@ CREATE INDEX idx_route_dropoff_points_route ON route_dropoff_points (route_id, i
 ALTER TABLE buses
   ADD COLUMN image_url VARCHAR(255) NULL AFTER license_plate;
 
-ALTER TABLE trip_seats
-  ADD COLUMN is_vip BOOLEAN DEFAULT FALSE AFTER status;
 
-ALTER TABLE bookings
-  ADD COLUMN contact_name VARCHAR(100) NULL AFTER customer_id;
 
-ALTER TABLE bookings
-  ADD COLUMN contact_phone VARCHAR(20) NULL AFTER contact_name;
-
-ALTER TABLE admins
-  ADD COLUMN is_active BOOLEAN DEFAULT TRUE AFTER role;
-
-ALTER TABLE bus_companies
-  ADD COLUMN is_active BOOLEAN DEFAULT TRUE AFTER address;
-
-ALTER TABLE bus_companies
-  ADD COLUMN deleted_at DATETIME NULL AFTER is_active;
-
-ALTER TABLE routes
-  ADD COLUMN bus_company_id BIGINT NULL AFTER id;
-
-UPDATE routes r
-LEFT JOIN (
-  SELECT t.route_id, MIN(b.bus_company_id) AS bus_company_id
-  FROM trips t
-  JOIN buses b ON b.id = t.bus_id
-  GROUP BY t.route_id
-) x ON x.route_id = r.id
-SET r.bus_company_id = COALESCE(r.bus_company_id, x.bus_company_id);

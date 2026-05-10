@@ -6,7 +6,6 @@ dotenv.config({ path: path.join(__dirname, "..", ".env") })
 const db = require("../src/config/db")
 const seatService = require("../src/services/seatService")
 const { generateTripSeats } = require("../src/services/tripSeatService")
-const { getSeatIssues } = require("../src/utils/seatConsistency")
 
 function formatDateTime(d) {
   const pad = (n) => String(n).padStart(2, "0")
@@ -100,11 +99,6 @@ async function main() {
 
   const busId = await createBus(busCompanyId, busType)
   await seatService.createSeatMap(busId, busType)
-
-  const issues = await getSeatIssues()
-  if (issues.length > 0) {
-    console.log("SEED_SEAT_ISSUES", issues)
-  }
 
   const tripId = await createTrip(busId, routeId)
   await generateTripSeats(tripId, busId)
