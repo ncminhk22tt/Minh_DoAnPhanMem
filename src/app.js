@@ -1,4 +1,4 @@
-﻿const express = require("express")
+const express = require("express")
 const path = require("path")
 require("dotenv").config()
 const cors = require("cors")
@@ -52,6 +52,7 @@ app.get("/test-db", async (req, res) => {
     const [rows] = await db.query("SELECT 1 as ok")
     res.json({ ok: true, rows })
   } catch (err) {
+    console.error("DB ERROR:", err)   // 👈 quan trọng
     res.json({ ok: false, error: err.message })
   }
 })
