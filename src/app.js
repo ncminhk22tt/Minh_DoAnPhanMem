@@ -3,6 +3,8 @@ const path = require("path")
 require("dotenv").config()
 const cors = require("cors")
 
+const db = require("./config/db")
+
 const app = express()
 
 const adminAuthRoutes = require("./routes/admin/adminAuthRoutes")
@@ -44,5 +46,14 @@ app.use("/api/trips", customerSeatRoutes)
 app.use("/api/bookings", bookingRoutes)
 app.use("/api/cities", cityRoutes)
 app.use("/api/seats", seatBookingRoutes)
+
+app.get("/test-db", async (req, res) => {
+  try {
+    const [rows] = await db.query("SELECT 1 as ok")
+    res.json({ ok: true, rows })
+  } catch (err) {
+    res.json({ ok: false, error: err.message })
+  }
+})
 
 module.exports = app
